@@ -32,10 +32,10 @@ def open_new_tab():
   None
   '''
   try:
-    logger.info('Opening a new tab in Edge...')
+    logger.debug('Opening a new tab in Edge...')
     pag.hotkey('ctrl', 't')
     sleep(1)
-    logger.info('New tab opened.')
+    logger.debug('New tab opened.')
   except Exception as e:
     logger.error('Failed to open a new tab in Edge: %s', str(e))
 
@@ -55,7 +55,7 @@ def open_new_window():
   None
   '''
   try:
-    logger.info('Opening a new Edge window...')
+    logger.debug('Opening a new Edge window...')
     # Press the hotkey to open the Run dialog
     pag.hotkey('win', 'r')
     sleep(1)  # Wait for the Run dialog to appear
@@ -63,6 +63,6 @@ def open_new_window():
     pag.typewrite('msedge')
     pag.press('enter')
     sleep(1)
-    logger.info('New Edge window opened.')
+    logger.debug('New Edge window opened.')
   except Exception as e:
     logger.error('Failed to open a new Edge window: %s', str(e))

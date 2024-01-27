@@ -23,10 +23,10 @@ def open_new_tab():
   Opens a new tab in Firefox using a hotkey.
   '''
   try:
-    logger.info('Opening a new tab in Firefox...')
+    logger.debug('Opening a new tab in Firefox...')
     pag.hotkey('ctrl', 't')
     sleep(1)
-    logger.info('New tab opened.')
+    logger.debug('New tab opened.')
   except Exception as e:
     logger.error('Failed to open a new tab in Firefox: %s', str(e))
 
@@ -45,7 +45,7 @@ def open_new_window():
   --------
   None
   '''
-  logger.info('Opening a new Firefox window...')
+  logger.debug('Opening a new Firefox window...')
   # Press the hotkey to open the Run dialog
   pag.hotkey('win', 'r')
   sleep(1)  # Wait for the Run dialog to appear
@@ -53,4 +53,4 @@ def open_new_window():
   pag.typewrite('firefox -new-window')
   pag.press('enter')
   sleep(1)  # Wait for Firefox to open
-  logger.info('New Firefox window opened.')
+  logger.debug('New Firefox window opened.')
