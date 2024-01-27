@@ -44,6 +44,9 @@ def go_to_my_github():
     logger.error('Failed to type into the address bar: %s', str(e))
 
 def click_ctrl_f():
+  '''
+  Presses the Ctrl+F key combination.
+  '''
   pag.hotkey('ctrl', 'f')  # Press the ctrl+f key
 
 def write_message_to_follow_my_github():

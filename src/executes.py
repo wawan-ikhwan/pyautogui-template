@@ -13,6 +13,15 @@ from commands import input_mouse
 from commands import terminal
 
 def execute_commands_for_windows():
+  '''
+  Executes a series of commands for Windows platform.
+  
+  The commands include opening a new window and tab in Microsoft Edge,
+  navigating to GitHub,
+  moving the mouse cursor to the follow button on GitHub,
+  activating the find function,
+  and writing a message.
+  '''
   msedge.open_new_window()
   msedge.open_new_tab()
   input_keyboard.go_to_my_github()
@@ -21,5 +30,10 @@ def execute_commands_for_windows():
   input_keyboard.write_message_to_follow_my_github()
 
 def execute_commands_for_linux():
+  '''
+  Executes a series of commands for Linux platform.
+  
+  The commands include opening a terminal and writing a message.
+  '''
   terminal.open_terminal()
   input_keyboard.write_message_to_follow_my_github()

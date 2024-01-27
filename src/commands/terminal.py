@@ -1,4 +1,4 @@
-"""
+'''
 This module contains a function to open the terminal using keyboard shortcuts.
 
 Imported Libraries:
@@ -6,12 +6,12 @@ Imported Libraries:
 
 Functions:
 - open_terminal() : Opens the terminal using a keyboard shortcut.
-"""
+'''
 
 import pyautogui as pag
 
 def open_terminal():
-  """
+  '''
   Function to open the terminal using a keyboard shortcut, LINUX ONLY.
   
   The function uses the pyautogui library to simulate the pressing of the 'ctrl', 'alt', and 't' keys simultaneously,
@@ -20,5 +20,5 @@ def open_terminal():
   Parameters: None
   
   Returns: None
-  """
+  '''
   pag.hotkey('ctrl', 'alt', 't')

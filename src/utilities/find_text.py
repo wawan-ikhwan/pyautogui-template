@@ -17,7 +17,6 @@ import os
 import logging
 from logging import Logger
 import platform
-import pyautogui as pag
 import pytesseract
 import cv2
 import numpy as np
@@ -44,7 +43,7 @@ else:
   raise Exception(f'{current_platform} is not supported yet for OCR.')
 
 def is_tesseract_installed():
-  """
+  '''
   This function checks if Tesseract-OCR is installed at the specified path.
 
   Args:
@@ -52,7 +51,7 @@ def is_tesseract_installed():
 
   Returns:
     bool: True if Tesseract-OCR is installed at the specified path, False otherwise.
-  """
+  '''
   return os.path.exists(os.environ['TESSERACT_BASEPATH'])
 
 def find_coordinates_text(text, lang='eng') -> (float, float):

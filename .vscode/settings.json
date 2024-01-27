@@ -1,9 +1,7 @@
 {
   "pylint.args": [
-    "--disable=W0703", // Catching too general exception
-    "--disable=W0719", // Raising exception too general
-    "--disale=E0401", // Unable to import
+    "--disable=W0703,W0719,E0401", // Catching too general exception
     "--indent-string='  '",
-    "--generated-members=cv2.*"
-  ]
+    "--generated-members=cv2.*, pywintypes.*, win32api.*, win32con",
+  ],
 }
