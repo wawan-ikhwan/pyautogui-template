@@ -1,0 +1,1 @@
+This directory is containing screenshots that will be used for reading `locateOnScreen`.
