@@ -14,7 +14,7 @@ import pyautogui as pag
 from PIL import Image
 from utilities.windows_log_on_screen import WINDOWS_LOGGER
 
-def get_screenshot(delay_sec=1):
+def get_screenshot(delay_sec=0.25):
   '''
   Captures a screenshot of the current screen. If a windows label is present, 
   it hides the label, takes the screenshot, and then shows the label again.
