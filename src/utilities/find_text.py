@@ -23,7 +23,6 @@ import numpy as np
 from PIL import Image
 from dotenv import load_dotenv
 from utilities.take_screenshot import get_screenshot
-from utilities.windows_log_on_screen import WINDOWS_LOGGER
 
 logger: Logger = logging.getLogger(__name__)
 current_platform: str = platform.system()
@@ -89,11 +88,7 @@ def find_coordinates_text(text, lang='eng', center=True) -> (float, float):
 
   # Find the provided text (text) on the grayscale screenshot
   # using the provided language (lang)
-  if WINDOWS_LOGGER is not None:
-    WINDOWS_LOGGER.hide_text()
   data = pytesseract.image_to_data(img, lang=lang, output_type='data.frame')
-  if WINDOWS_LOGGER is not None:
-    WINDOWS_LOGGER.show_text()
 
   # Find the coordinates of the provided text (text)
   try:
