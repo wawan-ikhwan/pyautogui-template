@@ -9,11 +9,13 @@ import logging
 from logging import Logger
 import datetime
 from executes import execute_commands_for_windows, execute_commands_for_linux
+import os
 
 if __name__ == "__main__":
   current_datetime: datetime = datetime.datetime.now()
+  current_directory_of_this_python_file: str = os.path.dirname(os.path.realpath(__file__))
   logging.basicConfig(
-    filename=f"./log/bot_{current_datetime.strftime('%Y-%m-%d_%H-%M-%S')}.log",
+    filename=f"{current_directory_of_this_python_file}/../log/bot_{current_datetime.strftime('%Y-%m-%d_%H-%M-%S')}.log",
     level=logging.DEBUG,
     format='%(asctime)s %(levelname)s %(name)s %(message)s'
   )
