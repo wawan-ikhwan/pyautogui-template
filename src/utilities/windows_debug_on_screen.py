@@ -58,7 +58,7 @@ class WindowsDebugScreen:
       win32con.WS_EX_TOPMOST |
       win32con.WS_EX_TRANSPARENT
     )
-    win32api.SetWindowLong(h_window, win32con.GWL_ex_style, ex_style)
+    win32api.SetWindowLong(h_window, win32con.GWL_EXSTYLE, ex_style)
 
     label.pack()
     self.label = label
