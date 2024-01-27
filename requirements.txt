@@ -4,3 +4,5 @@ pytesseract
 numpy
 pandas
 python-dotenv
+pywin32
+pypiwin32
