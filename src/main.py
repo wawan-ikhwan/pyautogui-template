@@ -25,6 +25,6 @@ if __name__ == "__main__":
   elif current_platform == 'Linux':
     execute_commands_for_linux()
   else:
-    logger.error('Platform not supported.')
-    raise Exception('Platform not supported.')
+    logger.critical('Current platform (%s) not supported.', current_platform)
+    raise Exception(f'Platform {current_platform} not supported.')
   logger.info('Application finished with total elapsed time: %s', str(datetime.datetime.now() - current_datetime))
