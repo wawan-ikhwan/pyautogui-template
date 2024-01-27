@@ -44,12 +44,10 @@ if __name__ == "__main__":
     label_update_handler = LabelUpdateHandler(windows_label)
     logging.getLogger().addHandler(label_update_handler)
     execute_commands_for_windows()
-    logger.info('This app close in 5 seconds...')
-    sleep(5)
   elif current_platform == 'Linux':
     execute_commands_for_linux()
   else:
     logger.critical('Current platform (%s) not supported.', current_platform)
     raise Exception(f'Platform {current_platform} not supported.')
   logger.info('Application finished with total elapsed time: %s', str(datetime.datetime.now() - current_datetime))
-  sleep(5)
+  sleep(7) # Just to display last log
