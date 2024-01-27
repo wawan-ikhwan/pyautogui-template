@@ -1,47 +1,41 @@
 '''
 log_handler.py
 --------------
-This module contains the LabelUpdateHandler class which is a custom logging handler.
-It is used to update a label with the latest log messages.
+This module contains the ScreenLoggerUpdateHandler class which is a custom logging handler.
+It is used to update log on screen.
 
 Classes:
-  LabelUpdateHandler: A custom logging handler that updates a label with the latest log messages.
+  ScreenLoggerUpdateHandler: A custom logging handler that updates log on screen.
 '''
 
 import logging
-from collections import deque
 
-class LabelUpdateHandler(logging.Handler):
+class ScreenLoggerUpdateHandler(logging.Handler):
   '''
-  A custom logging handler that updates a label with the latest log messages.
+  A custom logging handler that sends the latest log messages to a screen logger.
 
   Attributes:
-    label (str): The label to be updated.
-    last_logs (collections.deque): A deque that stores the last 10 log messages.
+    screen_logger (ScreenLogger): The screen logger to be updated.
 
   Methods:
-    emit(record): Formats the log record and updates the label with the latest log messages.
+    emit(record): Formats the log record and sends it to the screen logger.
   '''
-  def __init__(self, label):
+  def __init__(self, screen_logger):
     '''
-    Constructs all the necessary attributes for the LabelUpdateHandler object.
+    Constructs all the necessary attributes for the ScreenLoggerUpdateHandler object.
 
     Parameters:
-      label (str): The label to be updated.
+      screen_logger (ScreenLogger): The screen logger to be updated.
     '''
     super().__init__()
-    self.label = label
-    self.last_logs = deque(maxlen=10)
+    self.screen_logger = screen_logger
 
   def emit(self, record):
     '''
-    Formats the log record and updates the label with the latest log messages.
+    Formats the log record and sends it to the screen logger.
 
     Parameters:
-      record (logging.LogRecord): The log record to be formatted and added to the deque.
+      record (logging.LogRecord): The log record to be formatted and sent to the screen logger.
     '''
     log_message: str = self.format(record)
-    self.last_logs.append(log_message)
-
-    # Update the label with the log messages, separated by new lines
-    self.label.update_label('\n'.join(self.last_logs))
+    self.screen_logger.append_text(log_message, record.levelno)

@@ -11,8 +11,8 @@ from time import sleep
 from logging import Logger
 import datetime
 from executes import execute_commands_for_windows, execute_commands_for_linux
-from utilities.windows_debug_on_screen import WINDOWS_LABEL
-from utilities.log_handler import LabelUpdateHandler
+from utilities.windows_log_on_screen import WINDOWS_LOGGER
+from utilities.log_handler import ScreenLoggerUpdateHandler
 
 if __name__ == "__main__":
   current_datetime: datetime = datetime.datetime.now()
@@ -28,7 +28,7 @@ if __name__ == "__main__":
   logger.info('Application started with current platform: %s', current_platform)
   if current_platform == 'Windows':
     logging.getLogger().addHandler(
-      LabelUpdateHandler(WINDOWS_LABEL)
+      ScreenLoggerUpdateHandler(WINDOWS_LOGGER)
     ) # Create the custom handler and add it to the root logger
     execute_commands_for_windows()
   elif current_platform == 'Linux':

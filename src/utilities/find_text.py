@@ -23,6 +23,7 @@ import numpy as np
 from PIL import Image
 from dotenv import load_dotenv
 from utilities.take_screenshot import get_screenshot
+from utilities.windows_log_on_screen import WINDOWS_LOGGER
 
 logger: Logger = logging.getLogger(__name__)
 current_platform: str = platform.system()
@@ -54,7 +55,7 @@ def is_tesseract_installed():
   '''
   return os.path.exists(os.environ['TESSERACT_BASEPATH'])
 
-def find_coordinates_text(text, lang='eng') -> (float, float):
+def find_coordinates_text(text, lang='eng', center=True) -> (float, float):
   '''
   This function takes a screenshot of the main screen, converts it to grayscale,
   and then uses pytesseract to perform
@@ -83,17 +84,26 @@ def find_coordinates_text(text, lang='eng') -> (float, float):
   # Take a screenshot of the main screen
   screenshot: Image = get_screenshot()
 
-
   # Convert the screenshot to grayscale
   img: np.ndarray = cv2.cvtColor(np.array(screenshot), cv2.COLOR_RGB2GRAY)
 
   # Find the provided text (text) on the grayscale screenshot
   # using the provided language (lang)
+  if WINDOWS_LOGGER is not None:
+    WINDOWS_LOGGER.hide_text()
   data = pytesseract.image_to_data(img, lang=lang, output_type='data.frame')
+  if WINDOWS_LOGGER is not None:
+    WINDOWS_LOGGER.show_text()
 
   # Find the coordinates of the provided text (text)
   try:
     x, y = data[data['text'] == text]['left'].iloc[0], data[data['text'] == text]['top'].iloc[0]
+    if center:
+      logger.debug('Using centered coordinates...')
+      x, y = (
+        x + data[data['text'] == text]['width'].iloc[0] // 2,
+        y + data[data['text'] == text]['height'].iloc[0] // 2
+      )
   except IndexError:
     # The text was not found on the screen
     logger.warning('Text "%s" not found on the screen', text)
@@ -101,52 +111,4 @@ def find_coordinates_text(text, lang='eng') -> (float, float):
 
   # Text was found, return the coordinates
   logger.info('Coordinates of "%s" found: (%d, %d)', text, x, y)
-  return (x, y)
-
-def find_coordinates_text_center(text, lang='eng') -> (float, float):
-  '''
-    This function is similar to find_coordinates_text,
-    but it returns the coordinates of the center of the text instead of the top-left corner.
-
-  Args:
-    text (str): The text to find on the screen.
-    lang (str, optional): The language to use for OCR. Defaults to 'eng'.
-
-  Returns:
-    tuple: The x and y coordinates of the center of the first occurrence of the text on the screen.
-    If the text is not found, returns None.
-  '''
-  if not is_tesseract_installed():
-    logger.error(
-      'Tesseract is not installed at the specified path %s',
-      os.environ['TESSERACT_BASEPATH']
-    )
-    raise Exception(
-      f'Tesseract is not installed at the specified path: {os.environ["TESSERACT_BASEPATH"]}'
-    )
-  else:
-    logger.info('Tesseract is installed at the specified path %s', os.environ['TESSERACT_BASEPATH'])
-  logger.info('Finding center coordinates of "%s" on the screen...', text)
-  # Take a screenshot of the main screen
-  screenshot: Image = get_screenshot()
-
-  # Convert the screenshot to grayscale
-  img: np.ndarray = cv2.cvtColor(np.array(screenshot), cv2.COLOR_RGB2GRAY)
-
-  # Find the provided text (text) on the grayscale screenshot
-  # using the provided language (lang)
-  data = pytesseract.image_to_data(img, lang=lang, output_type='data.frame')
-
-  # Find the coordinates of the provided text (text)
-  try:
-    x, y = (
-      data[data['text'] == text]['left'].iloc[0] + data[data['text'] == text]['width'].iloc[0] // 2,
-      data[data['text'] == text]['top'].iloc[0] + data[data['text'] == text]['height'].iloc[0] // 2
-    )
-  except IndexError:
-    # The text was not found on the screen
-    return None
-
-  # Text was found, return the coordinates
-  logger.info('Center coordinates of "%s" found: (%d, %d)', text, x, y)
   return (x, y)

@@ -6,7 +6,7 @@ import logging
 from logging import Logger
 from time import sleep
 import pyautogui as pag
-from utilities.find_text import find_coordinates_text_center
+from utilities.find_text import find_coordinates_text
 
 logger: Logger = logging.getLogger(__name__)
 
@@ -14,7 +14,7 @@ def find_follow_button_in_my_github():
   '''
   This will finding the "Follow" button in my github.
   '''
-  return find_coordinates_text_center('Follow')
+  return find_coordinates_text('Follow', center=True)
 
 def move_mouse_cursor_to_follow_button_in_my_github():
   '''
