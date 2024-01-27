@@ -32,6 +32,16 @@ if load_dotenv():
 else:
   logger.warning('Could not load environment variables from .env file')
 
+if current_platform == 'Windows':
+  # In case you're on Windows and pytesseract doesn't find your installation (Happened to me)
+  os.environ['TESSDATA_PREFIX'] = os.path.join(os.environ['TESSERACT_BASEPATH'], 'tessdata')
+  pytesseract.pytesseract.tesseract_cmd = os.path.join(
+    os.environ['TESSERACT_BASEPATH'], 'tesseract.exe'
+  )
+else:
+  logger.error('%s is not supported yet for OCR.', current_platform)
+  raise Exception(f'{current_platform} is not supported yet for OCR.')
+
 def is_tesseract_installed():
   """
   This function checks if Tesseract-OCR is installed at the specified path.
@@ -43,16 +53,6 @@ def is_tesseract_installed():
     bool: True if Tesseract-OCR is installed at the specified path, False otherwise.
   """
   return os.path.exists(os.environ['TESSERACT_BASEPATH'])
-
-if current_platform == 'Windows':
-  # In case you're on Windows and pytesseract doesn't find your installation (Happened to me)
-  os.environ['TESSDATA_PREFIX'] = os.path.join(os.environ['TESSERACT_BASEPATH'], 'tessdata')
-  pytesseract.pytesseract.tesseract_cmd = os.path.join(
-    os.environ['TESSERACT_BASEPATH'], 'tesseract.exe'
-  )
-else:
-  logger.error('%s is not supported yet for OCR.', current_platform)
-  raise Exception(f'{current_platform} is not supported yet for OCR.')
 
 def find_coordinates_text(text, lang='eng') -> (float, float):
   '''
