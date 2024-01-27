@@ -148,7 +148,7 @@ Testing/
 # Pylance (https://github.com/microsoft/pylance-release)
 #   Pylance is an optional plugin for Visual Studio Code that provides enhanced and
 #   additional features to the editor for Python developers.
-.vscode/
+# .vscode/
 
 # Rope project settings
 .ropeproject
