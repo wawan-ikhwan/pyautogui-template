@@ -23,6 +23,7 @@ import cv2
 import numpy as np
 from PIL import Image
 from dotenv import load_dotenv
+from utilities.take_screenshot import get_screenshot
 
 logger: Logger = logging.getLogger(__name__)
 current_platform: str = platform.system()
@@ -81,7 +82,8 @@ def find_coordinates_text(text, lang='eng') -> (float, float):
     logger.info('Tesseract is installed at the specified path %s', os.environ['TESSERACT_BASEPATH'])
   logger.info('Finding coordinates of "%s" on the screen...', text)
   # Take a screenshot of the main screen
-  screenshot: Image = pag.screenshot()
+  screenshot: Image = get_screenshot()
+
 
   # Convert the screenshot to grayscale
   img: np.ndarray = cv2.cvtColor(np.array(screenshot), cv2.COLOR_RGB2GRAY)
@@ -127,7 +129,7 @@ def find_coordinates_text_center(text, lang='eng') -> (float, float):
     logger.info('Tesseract is installed at the specified path %s', os.environ['TESSERACT_BASEPATH'])
   logger.info('Finding center coordinates of "%s" on the screen...', text)
   # Take a screenshot of the main screen
-  screenshot: Image = pag.screenshot()
+  screenshot: Image = get_screenshot()
 
   # Convert the screenshot to grayscale
   img: np.ndarray = cv2.cvtColor(np.array(screenshot), cv2.COLOR_RGB2GRAY)

@@ -1,5 +1,6 @@
 import tkinter as Tkinter
 import win32api, win32con, pywintypes
+import platform
 
 class WindowsDebugScreen:
   def __init__(self):
@@ -32,3 +33,8 @@ class WindowsDebugScreen:
     global windows_label
     self.label.config(text=new_text)
     self.label.master.update()
+
+if platform.system() == 'Windows':
+  windows_label = WindowsDebugScreen()
+else:
+  windows_label = None

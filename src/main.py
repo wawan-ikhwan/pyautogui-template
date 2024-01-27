@@ -11,21 +11,8 @@ from time import sleep
 from logging import Logger
 import datetime
 from executes import execute_commands_for_windows, execute_commands_for_linux
-from utilities.windows_debug_on_screen import WindowsDebugScreen
-from collections import deque
-
-class LabelUpdateHandler(logging.Handler):
-  def __init__(self, label):
-    super().__init__()
-    self.label = label
-    self.last_logs = deque(maxlen=10)
-
-  def emit(self, record):
-    log_message: str = self.format(record)
-    self.last_logs.append(log_message)
-
-    # Update the label with the log messages, separated by new lines
-    self.label.update_label('\n'.join(self.last_logs))
+from utilities.windows_debug_on_screen import windows_label
+from utilities.log_handler import LabelUpdateHandler
 
 if __name__ == "__main__":
   current_datetime: datetime = datetime.datetime.now()
@@ -39,10 +26,7 @@ if __name__ == "__main__":
   current_platform: str = platform.system()
   logger.info('Application started with current platform: %s', current_platform)
   if current_platform == 'Windows':
-    windows_label = WindowsDebugScreen()
-    # Create the custom handler and add it to the root logger
-    label_update_handler = LabelUpdateHandler(windows_label)
-    logging.getLogger().addHandler(label_update_handler)
+    logging.getLogger().addHandler(LabelUpdateHandler(windows_label)) # Create the custom handler and add it to the root logger
     execute_commands_for_windows()
   elif current_platform == 'Linux':
     execute_commands_for_linux()
@@ -50,4 +34,4 @@ if __name__ == "__main__":
     logger.critical('Current platform (%s) not supported.', current_platform)
     raise Exception(f'Platform {current_platform} not supported.')
   logger.info('Application finished with total elapsed time: %s', str(datetime.datetime.now() - current_datetime))
-  sleep(7) # Just to display last log
+  sleep(10) # Just to display last log
