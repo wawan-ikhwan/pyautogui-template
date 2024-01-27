@@ -4,5 +4,6 @@ pytesseract
 numpy
 pandas
 python-dotenv
+tk
 pywin32
 pypiwin32
