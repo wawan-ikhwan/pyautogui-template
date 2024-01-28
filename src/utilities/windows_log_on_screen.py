@@ -64,7 +64,7 @@ class WindowsScreenLogger:
 
     text.pack()
     self.text = text
-    self.text_lines = deque(maxlen=5)
+    self.text_lines = deque(maxlen=10)
 
   def hide_text(self):
     '''
